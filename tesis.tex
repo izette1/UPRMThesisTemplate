@@ -1,0 +1,183 @@
+
+%____________________DOCUMENT PREAMBLE_________________________________
+\documentclass[12pt]{report}
+\usepackage{appendix}
+\usepackage{graphicx}
+\usepackage{sidecap}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{supertabular}
+\usepackage{array}
+\usepackage{threeparttable}
+\usepackage{booktabs}
+\usepackage[margin=3cm]{geometry}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[version=3]{mhchem}  %Chemical compounds \ce{(NH4)2SO4}.
+%\usepackage{fixltx2e}
+\usepackage{indentfirst}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{pdflscape}
+\usepackage{lipsum}
+\usepackage{blindtext}
+%\usepackage[nottoc]{tocbibind} %So bibliography won't appear as a chapter in the document
+\usepackage{pgfplots}
+\usepackage{fancyhdr}
+\usepackage{pgfplotstable}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{tocloft}
+\usepackage{notoccite} % PREVENTS CITES IN CAPTIONS FROM MISNUMBERING YOUR REFERENCES https://tex.stackexchange.com/questions/302594/citation-inside-a-caption-dont-follow-order-of-appearance
+\pgfplotsset{compat=1.7}
+\usepackage{tikz}
+\renewcommand{\bibname}{References} % or other title eg. Bibliography
+\bibliographystyle{ieeetr} %styles: abbrv, acm, alpha, apalike, ieeetr, plain, siam, unsrt.
+\usepackage[numbers,sort&compress]{natbib}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} %dots for chapters
+\hbadness=99999
+
+%_______________________________________________
+%TO CREATE LIST OF APPENDICES
+
+\newcommand{\listexamplename}{List of Appendices}
+\newlistof{example}{exp}{\listexamplename}
+\newcommand{\example}[1]{%
+\refstepcounter{example}
+\par\noindent\textbf{Appendix \theexample. #1}
+\addcontentsline{exp}{example}
+{\protect\numberline{\thechapter.\theexample}#1}\par}
+
+\makeatletter
+\@addtoreset{example}{chapter}
+\makeatother
+%from https://texblog.org/2008/07/13/define-your-own-list-of/
+%_____________________________________________________________
+
+\begin{document}
+\frenchspacing %override to remove double space after periods.
+
+%__________   TITLE PAGE   _________________________________________
+
+\include{prelim/portada3}  %decide if you have a 3, 4 or 5-member committee.
+\newpage
+
+%____PRELIMINARY PAGES: COPYRIGHT, ABSTRACT, ACKNOWLEDGMENTS, DEDICATION________
+
+\pagenumbering{roman}
+\setcounter{page}{2}
+\doublespacing
+\include{prelim/abstract} %edit abstract.tex
+
+%_______________COPYRIGHT PAGE___________
+
+\vspace*{7in}
+\begin{center}
+Copyright \copyright
+\\
+Your Name Here %%%
+\\
+20XX
+\end{center}
+\pagebreak
+%_____________________________________________
+
+\include{prelim/acknowledgment} %dedication and acknowledgment, edit acknowledgment.tex
+\newpage
+
+%_____________set TOC and subsection depth___________________________________
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+%____________________________________________________________________________
+
+\tableofcontents			
+ \cleardoublepage
+  \addcontentsline{toc}{section}{\listfigurename}\listoffigures
+
+  \cleardoublepage
+  \addcontentsline{toc}{section}{\listtablename}\listoftables
+
+\include{prelim/acronyms} %edit acronyms.tex
+\addcontentsline{toc}{section}{List of Acronyms}
+\include{prelim/symbols}
+\addcontentsline{toc}{section}{List of Symbols}
+\addcontentsline{toc}{section}{\listexamplename}\listofexample
+
+
+\newpage
+%%%% PAGE NUMBERING ___________
+
+%%%% page number location at bottom right______________________________________________________
+% move page number to right on first page of Chapter
+\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[R]{\thepage} % except the right
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+
+% move page number to right on rest of pages
+\pagestyle{fancy}
+\fancyhf{}                         %to change headers and footers
+\renewcommand{\headrulewidth}{0pt} % to default to no line in header
+\rfoot{\thepage}                   %to move page number to bottom right
+
+\pagenumbering{arabic}
+%%_________________________________________________________________________________
+
+
+\include{chapters/capitulo1}
+\include{chapters/capitulo2}
+\include{chapters/capitulo3}
+\include{chapters/capitulo4}
+\include{chapters/capitulo5}
+\include{chapters/capitulo6}
+\include{chapters/capitulo7}
+\include{chapters/conclusion}
+\bibliography{referencias} 
+\addcontentsline{toc}{chapter}{References}
+\newpage
+
+
+%______________APPENDICES CONTENT______________________________
+% _____________APPENDIX A______________________________________
+\addcontentsline{exp}{chapter}{Appendix A: MATLAB Code} %Change title of Appendix A for List of Appendices
+%\example{MATLAB CODE}
+%\label{1st_ex}
+\chapter*{Appendix A: MATLAB Code} %Change title of Appendix A
+
+\noindent \lipsum[1][1-20] %WRITE HERE
+\noindent \lipsum[1][1-20] %WRITE HERE
+\noindent \lipsum[1][1-20] %WRITE HERE
+
+
+\newpage
+
+% _____________APPENDIX B______________________________________
+\addcontentsline{exp}{chapter}{Appendix B: Data} %Change title of Appendix B for List of Appendices
+\chapter*{Appendix B: Data} %Change title of Appendix B
+%\example{DATA}
+%\label{2nd_ex}
+\noindent \lipsum[1][1-3] %WRITE HERE
+
+\newpage
+
+% _____________APPENDIX C______________________________________
+\addcontentsline{exp}{chapter}{Appendix C: More Data} %Change title of Appendix C for List of Appendices
+\chapter*{Appendix C: More Data} %Change title of Appendix C
+%\example{DATA}
+%\label{2nd_ex}
+\noindent \lipsum[1][1-3] %WRITE HERE
+
+
+% _____________APPENDIX D______________________________________
+\addcontentsline{exp}{chapter}{Appendix D: More Data} %Change title of Appendix D for List of Appendices
+\chapter*{Appendix D: More Data} %Change title of Appendix C
+%\example{DATA}
+%\label{2nd_ex}
+\noindent \lipsum[1][1-3] %WRITE HERE
+
+\end{document}
